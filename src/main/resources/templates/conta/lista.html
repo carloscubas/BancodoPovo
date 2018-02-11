@@ -57,7 +57,9 @@
                                 <td th:text="${conta.saldo}"> Saldo</td>
                                 <td th:text="${conta.descricaoTipoConta}"> Tipo Conta</td>
                                 <td class="a-center">
-                                		<a href="historico.conta.action?idConta=${conta.id}">
+                                
+                               
+                                		<a  th:href="@{'/historico/conta/'+${conta.id}}" href="#>
                                 		<img src="/img/icons/user_edit.png" title="Histórico" width="16" height="16" /> Históricos </a>
                                 	</td>
                             </tr>
