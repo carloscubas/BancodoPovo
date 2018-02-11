@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Banco do Povo</title>
+	<link rel="stylesheet" type="text/css" href="/css/theme.css" />
+	<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<script>
+   var StyleFile = "theme4.css";
+   document.writeln('<link rel="stylesheet" type="text/css" href="/css/' + StyleFile + '">');
+</script>
+<!--[if IE]>
+<link rel="stylesheet" type="text/css" href="/css/ie-sucks.css" />
+<![endif]-->
+</head>
+
+<body>
+	<div id="container">
+    	<div id="header">
+        	<h2>Banco do Povo</h2>
+    		<div id="topmenu">
+            	<ul>
+                	<li class="current"><a href="#">Correntista</a></li>
+                    <li><a th:href="@{'/conta/lista'}" >Contas</a></li>
+              </ul>
+          </div>
+      </div>
+        <div id="wrapper">
+            <div id="content">
+                <div id="box">
+                	<h3 id="adduser">Add Correntista</h3>
+                    
+					<form id="correntistaForm" th:action="@{/correntista/(form)}" method="post" th:object="${correntista}" action="#">
+                      <fieldset id="personal">
+                        <legend>Informações</legend>
+                        <label for="lastname">Nome : </label> 
+                        <input name="nome" id="nome" type="text" tabindex="1" />
+                        <br />
+                        <label for="email">Email : </label>
+                        <input name="email" id="email" type="text" 
+                        tabindex="2" />
+                        <br />
+                      </fieldset>
+                      <div align="center">
+	                      <input id="button1" type="submit" value="Send" /> 
+	                      <input id="button2" type="reset" />
+                      </div>
+                    </form>
+                </div>
+            </div>
+            <div id="sidebar">
+  				<ul>
+                	<li><h3><a href="#" class="house">Dashboard</a></h3>
+                        <ul>
+                        	<li><a href="#" class="report">Sales Report</a></li>
+                        </ul>
+                    </li>
+				</ul>       
+          </div>
+      </div>
+        <div id="footer">
+        <div id="credits">
+   		Template by <a href="http://www.bloganje.com">Bloganje</a>
+        </div>
+        <br />
+
+        </div>
+</div>
+</body>
+</html>

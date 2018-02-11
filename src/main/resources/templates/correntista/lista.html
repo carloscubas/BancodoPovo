@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8" />
+<title>Banco do Povo</title>
+<link rel="stylesheet" type="text/css" href="/css/theme.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<script>
+   var StyleFile = "theme4.css";
+   document.writeln('<link rel="stylesheet" type="text/css" href="/css/' + StyleFile + '">');
+</script>
+<!--[if IE]>
+<link rel="stylesheet" type="text/css" href="/css/ie-sucks.css" />
+<![endif]-->
+</head>
+
+<body>
+	<div id="container">
+    	<div id="header">
+        	<h2>Banco do Povo</h2>
+    		<div id="topmenu">
+            	<ul>
+                	<li class="current"><a href="#">Correntista</a></li>
+                    <li><a th:href="@{'/conta/lista'}"  href="#">Contas</a></li>
+              </ul>
+          </div>
+      </div>
+       <div id="top-panel">
+            <div id="panel">
+                <ul>
+					<li><a th:href="@{'/correntista/novo'}" href="#" class="useradd">Add Correntista</a></li>
+                </ul>
+            </div>
+      </div>
+
+        <div id="wrapper">
+            <div id="content">
+ 			<div id="box">
+                	<h3>Users</h3>
+                	<table width="100%">
+						<thead>
+							<tr>
+                            	<th width="40px"><a href="#">ID<img src="/img/icons/arrow_down_mini.gif" width="16" height="16" align="absmiddle" /></a></th>
+                            	<th><a href="#">Nome</a></th>
+                                <th><a href="#">Email</a></th>
+                                <!--  <th width="60px"><a href="#">Action</a></th> -->
+                            </tr>
+						</thead>
+						<tbody>
+							<tr th:each="correntista : ${correntistas}">
+	                            	<td class="a-center" th:text="${correntista.id}"> id </td>
+	                            	<td th:text="${correntista.nome}"> nome </td>
+	                             <td th:text="${correntista.email}"> email </td>
+                            </tr>
+						</tbody>
+					</table>
+                </div>
+            </div>
+            <div id="sidebar">
+  				<ul>
+                	<li><h3><a href="#" class="house">Dashboard</a></h3>
+                        <ul>
+                        	<li><a href="#" class="report">Balanço</a></li>
+                        </ul>
+                    </li>
+                   
+				</ul>       
+          </div>
+      </div>
+        <div id="footer">
+        <div id="credits">
+   		Template by <a href="http://www.bloganje.com">Bloganje</a>
+        </div>
+       <br />
+
+        </div>
+</div>
+<script src="js/conta.js"></script>
+</body>
+</html>

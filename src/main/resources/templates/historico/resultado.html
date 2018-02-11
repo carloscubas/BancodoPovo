@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+
+
+		<tr th:each="historico : ${conta.historicos}">
+			<td class="a-center" th:text="${historico.tipo}"> tipo </td>
+			<td th:text="${historico.valor}"> valor </td>
+			<td th:text="${historico.descricao}"> descrição</td>
+		</tr>
+	
+		<tr>
+			<td class="a-center"></td>
+			<td><b th:text="${conta.saldo}">saldo</b></td>
+			<td></td>
+		</tr>
+
+
+</html>

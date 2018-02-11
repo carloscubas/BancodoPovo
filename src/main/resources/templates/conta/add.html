@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Banco do Povo</title>
+	<link rel="stylesheet" type="text/css" href="/css/theme.css" />
+	<link rel="stylesheet" type="text/css" href="/css/style.css" />
+	<script>
+		var StyleFile = "theme4.css";
+		document.writeln('<link rel="stylesheet" type="text/css" href="/css/' + StyleFile + '">');
+	</script>
+	<!--[if IE]>
+	<link rel="stylesheet" type="text/css" href="css/ie-sucks.css" />
+	<![endif]-->
+</head>
+
+<body>
+	<div id="container">
+		<div id="header">
+			<h2>Banco do Povo</h2>
+			<div id="topmenu">
+				<ul>
+					<li><a th:href="@{'/correntista/lista'}" href="#">Correntista</a></li>
+					<li class="current"><a th:href="@{'/conta/lista'}" href="#">Contas</a></li>
+				</ul>
+			</div>
+		</div>
+		<div id="wrapper">
+			<div id="content">
+				<div id="box">
+					<h3 id="adduser">Add Conta</h3>
+					<form id="contaForm" th:action="@{/conta/(form)}" method="post"
+						th:object="${conta}" action="#">
+
+						<fieldset id="personal">
+							<legend>Informações</legend>
+							<label for="correntista">Clientes : </label> <select
+								id="correntista" th:field="*{correntista}">
+								<option value="">todos</option>
+								<option th:each="correntista : ${correntistas}"
+									th:value="${correntista.id}" th:text="${correntista.nome}">
+									Nome do correntista</option>
+							</select> <br /> <label for="saldo">Saldo Inicial : </label> 
+							<input name="saldo" id="saldo" type="text" tabindex="1" /> <br />
+							<p>
+								Conta Premium? : 
+								<input name="tipoConta" id="tipoConta" type="checkbox" value="2" tabindex="35" />
+							</p>
+
+						</fieldset>
+
+						<div align="center">
+							<input id="button1" type="submit" value="Send" /> 
+							<input id="button2" type="reset" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div id="sidebar">
+			<ul>
+				<li><h3> <a href="#" class="house">Dashboard</a> </h3>
+					<ul>
+						<li><a href="#" class="report">Sales Report</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div id="footer">
+		<div id="credits">
+			Template by <a href="http://www.bloganje.com">Bloganje</a>
+		</div>
+		<br/>
+	</div>
+</body>
+</html>
