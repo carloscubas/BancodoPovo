@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cubas.bancodopovo.model.Conta;
 import com.cubas.bancodopovo.model.Correntista;
+import com.cubas.bancodopovo.model.Historico;
 import com.cubas.bancodopovo.repository.ContaRepository;
 
 @Controller
@@ -27,25 +28,13 @@ public class HistoricoController {
 		
 		Conta conta = contaRepository.findOne(idConta);
 		
-		return new ModelAndView("historico/conta", "conta", conta);
+		ModelAndView modelAndView = new ModelAndView("historico/conta");
+		modelAndView.addObject("historico", new Historico());
+		modelAndView.addObject("conta", conta);
+		
+		return modelAndView;
 	}
 	
-	/*
-	 * String idConta =  req.getParameter("idConta").trim();
-		System.out.println(idConta);
-		
-		Session sessao = HibernateFactory.configureSessionFactory().openSession();
-		ContaRepository contaDao = new ContaRepositoryImpl(sessao);
-		
-		Long id = Long.valueOf(idConta);
-		
-		Conta conta = contaDao.find(id);
-		
-		req.setAttribute("conta", conta);
 
-		RequestDispatcher rd = req.getRequestDispatcher("/historico.conta.jsp");
-		rd.forward(req, resp);
-		
-	 */
 
 }
