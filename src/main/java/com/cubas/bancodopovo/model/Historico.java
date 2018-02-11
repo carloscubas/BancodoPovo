@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Historico {
@@ -22,8 +25,12 @@ public class Historico {
 	
 	private String descricao;
 	
+	@Transient
+	private Long idConta;
+	
 	@ManyToOne
 	@JoinColumn(name="id_conta")
+	@JsonIgnore
 	private Conta conta;
 
 	public long getId() {
@@ -65,4 +72,16 @@ public class Historico {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
+	public Long getIdConta() {
+		return idConta;
+	}
+
+	public void setIdConta(Long idConta) {
+		this.idConta = idConta;
+	}
+
+
+	
+	
 }
