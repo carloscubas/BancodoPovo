@@ -2,6 +2,8 @@ package com.cubas.bancodopovo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +37,17 @@ public class HistoricoRestController {
 		
 		contaRepository.save(conta);
 		
-		AjaxResponseBody response = new AjaxResponseBody(conta.getSaldo(), conta.getHistoricos());
+		AjaxResponseBody response = new AjaxResponseBody(conta.getId(), conta.getSaldo(), conta.getHistoricos());
+		
+		return ResponseEntity.ok(response);
+		
+	}
+	
+	@GetMapping("/listhistorico/{id}")
+	public ResponseEntity<?> list(@PathVariable("id") Long idConta) {
+		
+		Conta conta = contaRepository.findOne(idConta);
+		AjaxResponseBody response = new AjaxResponseBody(conta.getId(), conta.getSaldo(), conta.getHistoricos());
 		
 		return ResponseEntity.ok(response);
 		

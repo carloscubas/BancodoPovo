@@ -1,25 +1,28 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" ng-app="moduleHistorico">
 
 <head>
 <meta charset="UTF-8" />
 <title>Banco do Povo</title>
-<link rel="stylesheet" type="text/css" href="/css/theme.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script>
-	var StyleFile = "theme4.css";
-	document
-			.writeln('<link rel="stylesheet" type="text/css" href="/css/' + StyleFile + '">');
-</script>
 
+	<script type="text/javascript" src="/webjars/jquery/2.2.4/jquery.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.js"></script>
+	<script src="/app/historico.js"></script>
 
-<!--[if IE]>
+	<link rel="stylesheet" type="text/css" href="/css/theme.css" />
+	<link rel="stylesheet" type="text/css" href="/css/style.css" />
+	<script>
+		var StyleFile = "theme4.css";
+		document.writeln('<link rel="stylesheet" type="text/css" href="/css/' + StyleFile + '">');
+	</script>
+
+	<!--[if IE]>
 	<link rel="stylesheet" type="text/css" href="/css/ie-sucks.css" />
 	<![endif]-->
 </head>
 
 <body>
-	<div id="container">
+	<div id="container" ng-controller="ListaHistoricoController" data-th-attr="data-ng-init='loadtable('+${conta.id}+')'" >
 		<div id="header">
 			<h2>Banco do Povo</h2>
 			<div id="topmenu">
@@ -31,12 +34,14 @@
 		</div>
 		<div id="wrapper">
 
-			<div id="content">
+			<div id="content" >
 				<div id="box">
-					<div id="tabela">
+			
+				
+					<div id="tabela" >
 					
 						<h3 th:text="@{'Histórico da Conta '+ ${conta.id} +' : '+ ${conta.correntista.nome} + ' : RS ' + ${conta.saldo}}"> </h3>
-						<table width="100%">
+						<table>
 							<thead>
 								<tr>
 									<th><a href="#">Tipo</a></th>
@@ -46,15 +51,15 @@
 							</thead>
 							<tbody id="listatabela">
 
-								<tr th:each="historico : ${conta.historicos}">
-									<td class="a-center" th:text="${historico.tipo}">tipo</td>
-									<td th:text="${historico.valor}">valor</td>
-									<td th:text="${historico.descricao}">descricao</td>
+								<tr ng-repeat="item in itens">
+									<td class="a-center">{{ item.tipo }}</td>
+									<td>{{ item.valor }}</td>
+									<td>{{ item.descricao }}</td>
 								</tr>
 
 								<tr>
 									<td class="a-center"></td>
-									<td><b th:text="@{'R$'+ ${conta.saldo}}">R$ 100000</b></td>
+									<td><b>{{ valorFinal }}</b></td>
 									<td></td>
 								</tr>
 
@@ -69,24 +74,27 @@
 					<div id="box">
 						<h3 id="adduser">Movimentação</h3>
 						
-						<form id="formhistorico" th:action="@{/historico/addhistorico}" method="post" action="#">
-							<!--  <input type="hidden" th:value="${conta.id}" th:name="conta"/> -->
-							<input type="hidden" name="idConta" th:value="${conta.id}"/> 
+						<form id="formhistorico" name="formhistorico">
+							<!--  <input type="hidden" name="idConta" ng-model="idConta" th:value="${conta.id}"/>  -->
+							<input type="hidden" name="idConta" ng-model="idconta"/> 
+							
 							
 							<fieldset id="personal">
 								<legend>Informações</legend>
-								<label for="lastname">Valor : </label> <input name="valor"
-									id="valor" type="text" tabindex="1" /> <br /> <label
-									for="descricao">Descrição : </label> <input name="descricao"
-									id="descricao" type="text" tabindex="1" /> <br /> <label
-									for="tipo">Tipo : </label> <select name="tipo" id="tipo">
+								<label for="lastname">Valor : </label> 
+								<input name="valor" id="valor" type="number" tabindex="1" ng-model="item.valor" /> <br /> 
+								<label for="descricao">Descrição : </label> 
+								<input name="descricao" id="descricao" type="text" tabindex="1" ng-model="item.descricao" /> <br /> 
+								<label for="tipo">Tipo : </label> 
+								<select name="tipo" id="tipo" ng-model="item.tipo">
 									<option value="C">Crédito</option>
 									<option value="D">Débito</option>
 								</select>
 
 							</fieldset>
 							<div align="center">
-								<input id="button1" type="submit" value="Send" /> 
+								<button ng-click="adicionaItem()">adicionar ítem</button>
+								
 								<input id="button2" type="reset" />
 							</div>
 						</form>
@@ -105,8 +113,6 @@
 		</div>
 	</div>
 
-	<script type="text/javascript" src="/webjars/jquery/2.2.4/jquery.min.js"></script>
-	<script src="/js/conta.js"></script>
 	
 </body>
 </html>
