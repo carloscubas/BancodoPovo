@@ -41,7 +41,7 @@
 					<div id="tabela" >
 					
 						<h3 th:text="@{'Histórico da Conta '+ ${conta.id} +' : '+ ${conta.correntista.nome} + ' : RS ' + ${conta.saldo}}"> </h3>
-						<table>
+						<table >
 							<thead>
 								<tr>
 									<th><a href="#">Tipo</a></th>
@@ -93,8 +93,7 @@
 
 							</fieldset>
 							<div align="center">
-								<button ng-click="adicionaItem()">adicionar ítem</button>
-								
+								<button data-th-attr="ng-click='adicionaItem('+${conta.id}+')'">adicionar ítem</button>
 								<input id="button2" type="reset" />
 							</div>
 						</form>
@@ -108,8 +107,6 @@
 				</div>
 				<br />
 			</div>
-
-
 		</div>
 	</div>
 

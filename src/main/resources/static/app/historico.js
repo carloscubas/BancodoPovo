@@ -1,66 +1,70 @@
 var app = angular.module("moduleHistorico",[]);
 
-
-
-function ListaHistoricoController($scope) {
-	
-	$scope.itens = [
-		{tipo: 'C',
-        valor: 300000,
-        descricao: 'TESTE'}
-		];
+function ListaHistoricoController($scope, $http) {
 	
 	$scope.loadtable = function (value) {
+		
+			$scope.itens = [];
 		
 			var itens = [];
 			var valorInicial = 0;
 			
-			$.ajax({
-			    type: "GET",
-			    url: "/historico/listhistorico/"+value,
-			    contentType: "application/json; charset=utf-8",
-			    dataType: "json",
-			    success: function(data){
-			    	
-			    		var json = JSON.stringify(data);
-			    		
-			    		var valorInicial = data['valorTotal'];
-			    		$scope.idconta = data['id'];
-			    		var saldo = 0;
-			    
-			    		for(i = 0; i < data['historicos'].length; i++){
-			    			
-			    			itens.push(
-			    	        		{
-			    	        			tipo: data['historicos'][i].tipo,
-		                        valor: data['historicos'][i].valor,
-		                        descricao: data['historicos'][i].descricao
-		                     });
-			    			
-			    			if(data['historicos'][i].tipo == 'C'){
-			    				valorInicial += data['historicos'][i].valor;
-			    			}else{
-			    				valorInicial -= data['historicos'][i].valor;
-			    			}
-			    		}
-			    		
-			    	},
-			    failure: function(errMsg) {
-		    			console.log("error: " + errMsg);
-			    }
-			});
-			
-    			$scope.valorFinal = valorInicial;
-			$scope.itens = itens;
+			$http({
+	            method : "GET",
+	            url : "/historico/listhistorico/"+value
+	        }).then(function mySuccess(response) {
+	        	
+		        	var valorInicial = response.data.valorTotal;
+		    
+		    		for(i = 0; i < response.data.historicos.length; i++){
+		    			
+		    			$scope.itens.push(
+		    	        		{
+		    	        			tipo: response.data.historicos[i].tipo,
+		    	        			valor: response.data.historicos[i].valor,
+		    	        			descricao: response.data.historicos[i].descricao
+		    	        		});
+		    			
+		    			if(response.data.historicos[i].tipo == 'C'){
+		    				valorInicial += response.data.historicos[i].valor;
+		    			}else{
+		    				valorInicial -= response.data.historicos[i].valor;
+		    			}
+		    		}
+		    		$scope.valorFinal = valorInicial;
+	        	
+	        	
+	        }, function myError(response) {
+	            console.log(response);
+	        });
 	};
 		    
-    $scope.adicionaItem = function () {
-	       $scope.itens.push({tipo: $scope.item.tipo,
-	                           valor: $scope.item.valor,
-	                           descricao: $scope.item.descricao});
+    		$scope.adicionaItem = function (value) {
+    			
+    			console.log(JSON.stringify({
+					valor : $scope.item.valor,
+					descricao : $scope.item.descricao,
+					tipo : $scope.item.tipo,
+					idConta : value 
+				}));
+	       
+	       $http({
+	            method : "POST",
+	            url : "/historico/addhistorico",
+	            data:JSON.stringify({
+					valor : $scope.item.valor,
+					descricao : $scope.item.descricao,
+					tipo : $scope.item.tipo,
+					idConta : value 
+				})
+	        }).then(function mySuccess(response) {
+	            console.log("sucess: " + response);
+	        		$scope.loadtable(value);
+	        }, function myError(response) {
+	            console.log("error: " + response);
+	        });
+	       
     };
-    
-   
 }
 
 app.controller("ListaHistoricoController",ListaHistoricoController);
